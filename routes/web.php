@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AcademicController;
+use App\Http\Controllers\DosenController;
 use App\Http\Controllers\KrskhsController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\PageController;
@@ -50,6 +51,6 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::delete('/krskhs/{krskhs}', [KrskhsController::class, 'destroy'])->name('krskhs.destroy');
 });
 
-Route::view('/welcome', 'welcome');
+Route::resource('dosen', DosenController::class); //CRUD untuk dosen
 
 require __DIR__.'/auth.php';

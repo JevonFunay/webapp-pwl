@@ -13,7 +13,7 @@ class DosenController extends Controller
     public function index()
     {
         $data = Dosen::all();
-        return $data;
+        return view('dosen.index', compact('data'));
     }
 
     /**
@@ -21,7 +21,7 @@ class DosenController extends Controller
      */
     public function create()
     {
-        //
+        return view('dosen.create');
     }
 
     /**
@@ -29,7 +29,19 @@ class DosenController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nik' => 'required|numeric|digits:7|unique:dosens,nik',
+            'namaDosen' => 'required'], [
+            'nik.requered' => 'NIK wajib diisi.',
+            'nik.numeric' => 'NIK harus berupa angka.',
+            'nik.digits' => 'NIK harus terdiri dari 7 digit.',
+            'nik.unique' => 'NIK sudah terdaftar.',
+            'namaDosen.required' => 'Nama Dosen wajib diisi.'
+        ]);
+
+        Dosen::create($request->all());
+
+        return redirect()->route('dosen.index')->with('success', 'Dosen berhasil ditambahkan.');
     }
 
     /**
@@ -45,7 +57,7 @@ class DosenController extends Controller
      */
     public function edit(Dosen $dosen)
     {
-        //
+        return view('dosen.edit', compact('dosen'));
     }
 
     /**
